@@ -55,14 +55,6 @@ export function applyChanges(update: UpdatePayload): void {
   }
 
   server.applyChanges(update.changes);
-
-  // Log the updated structure from the Y.Doc in ClientProtocol
-  const protocol = protocols.get(update.documentID);
-  if (protocol) {
-    // Access the doc (Y.Doc) from the client protocol and log the "xml" root
-    const xmlRoot = protocol.doc.get("xml", Y.XmlElement) as Y.XmlElement;
-    console.log(xmlRoot.toString());
-  }
 }
 
 /**

@@ -69,6 +69,8 @@ export interface AppliedChange {
     index: number;
     length: number;
   };
+  undo?: boolean;
+  redo?: boolean;
 }
 
 /**
@@ -77,6 +79,8 @@ export interface AppliedChange {
  */
 export class ServerXmlDocument {
   private _y: Y.XmlElement;
+  private _undoManager: Y.UndoManager;
+
   public doc: Y.Doc;
 
   /**
@@ -86,6 +90,8 @@ export class ServerXmlDocument {
   constructor(doc: Y.Doc, notifyChanges: (msg: ChangeNotification) => void) {
     // "xml" root node
     this._y = doc.get("xml", Y.XmlElement) as Y.XmlElement;
+    this._undoManager = new Y.UndoManager(this._y);
+
     this.doc = doc;
 
     // Observe changes in the Y.XmlElement tree
@@ -191,6 +197,14 @@ export class ServerXmlDocument {
   public applyBackendChanges(changes: Uint8Array): void {
     // Optionally, you can pass an origin to track changes, e.g. Y.applyUpdate(this.doc, changes, "server")
     Y.applyUpdate(this.doc, changes);
+  }
+
+  public doUndo(): void {
+    this._undoManager.undo();
+  }
+
+  public doRedo(): void {
+    this._undoManager.redo();
   }
 
   /**
@@ -302,8 +316,7 @@ export class ServerXmlDocument {
    * Inserts children into a Y.XmlElement, either after a specified child,
    * at a given index, or by pushing onto the end if neither is specified.
    */
-  private doInsertChildren(
-    element: Y.XmlElement,
+  private doInsertChildren(element: Y.XmlElement,
     {
       after,
       index,
@@ -474,6 +487,7 @@ export class ServerXmlDocument {
     for (const change of changes) {
       // If nodeID is provided, find that node; otherwise use the root
       const elementOrText = change.nodeID ? this.findNode(change.nodeID) : this._y;
+
       if (elementOrText == null) {
         throw new Error("Element was not found for nodeID " + change.nodeID);
       }
@@ -537,6 +551,15 @@ export class ServerXmlDocument {
           throw new Error("Node is not a text element.");
         }
         this.doDeleteText(elementOrText, change.deleteText);
+      }
+
+      // 9) Undo previous change
+      if (change.undo) {
+        this.doUndo();
+      }
+
+      if (change.redo) {
+        this.doRedo();
       }
     }
   }
