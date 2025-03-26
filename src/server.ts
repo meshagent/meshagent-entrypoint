@@ -79,18 +79,22 @@ export interface AppliedChange {
  */
 export class ServerXmlDocument {
   private _y: Y.XmlElement;
-  private _undoManager: Y.UndoManager;
-
+  private _undoManager: Y.UndoManager | null;
+ 
   public doc: Y.Doc;
 
   /**
    * @param doc The Y.Doc object containing an "xml" root element.
    * @param notifyChanges A callback invoked whenever Yjs observes changes (insert, delete, attribute changes, etc.)
    */
-  constructor(doc: Y.Doc, notifyChanges: (msg: ChangeNotification) => void) {
+  constructor(doc: Y.Doc, undo: boolean, notifyChanges: (msg: ChangeNotification) => void) {
     // "xml" root node
     this._y = doc.get("xml", Y.XmlElement) as Y.XmlElement;
-    this._undoManager = new Y.UndoManager(this._y);
+    if(undo) {
+      this._undoManager = new Y.UndoManager(this._y);
+    } else {
+      this._undoManager = null
+    }
 
     this.doc = doc;
 

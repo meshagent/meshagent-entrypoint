@@ -133,6 +133,7 @@ export function applyBackendChanges(documentID: string, base64Changes: string): 
 export function registerDocument(
   id: string,
   base64Data: string | null,
+  undo: boolean = true,
   sendUpdateToBackend?: SendUpdateFn,
   sendUpdateToClient?: SendUpdateFn,
 ): void {
@@ -155,7 +156,7 @@ export function registerDocument(
   });
 
   // Create a server doc that, on updates, calls "sendUpdateToClient"
-  const server = new ServerXmlDocument(clientProtocol.doc, (update: ChangeNotification) => {
+  const server = new ServerXmlDocument(clientProtocol.doc, undo, (update: ChangeNotification) => {
     const msg = JSON.stringify({ documentID: id, data: update });
     const fn = sendUpdateToClient ?? onSendUpdateToClient;
 
