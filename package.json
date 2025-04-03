@@ -1,6 +1,6 @@
 {
     "name": "meshagent-entrypoint",
-    "version": "1.0.0",
+    "version": "0.0.9",
     "description": "",
     "main": "dist/src/index.js",
     "scripts": {
@@ -30,5 +30,5 @@
         "typescript": "^5.8.2"
     },
     "author": "",
-    "license": "ISC"
+    "license": "Apache-2.0"
 }
