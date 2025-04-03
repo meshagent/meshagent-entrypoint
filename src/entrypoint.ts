@@ -133,7 +133,7 @@ export function applyBackendChanges(documentID: string, base64Changes: string): 
 export function registerDocument(
   id: string,
   base64Data: string | null,
-  undo: boolean = true,
+  undo: boolean = false,
   sendUpdateToBackend?: SendUpdateFn,
   sendUpdateToClient?: SendUpdateFn,
 ): void {

@@ -1,6 +1,10 @@
 import * as Y from "yjs";
 import { v4 as uuid } from "uuid";
 
+interface DeltaAttributes {
+  attributes?: Record<string, any>;
+}
+
 export interface ChangeNotificationElements {
   retain?: number;
   insert?: any[]; // Typically an array of serialized children
@@ -169,6 +173,15 @@ export class ServerXmlDocument {
 
           // Process text deltas
           for (const delta of yxmlEvent.changes.delta) {
+            let attributes = undefined;
+
+            if (delta.hasOwnProperty("attributes")) {
+              // Extract attributes if present in the delta
+              const d = delta as DeltaAttributes; // Cast to DeltaAttributes to access attributes
+
+              attributes = d.attributes;
+            }
+
             if (delta.insert) {
               message.text.push({
                 retain: delta.retain,
@@ -182,6 +195,7 @@ export class ServerXmlDocument {
             } else if (delta.retain) {
               message.text.push({
                 retain: delta.retain,
+                attributes 
               });
             }
           }
@@ -204,11 +218,11 @@ export class ServerXmlDocument {
   }
 
   public doUndo(): void {
-    this._undoManager.undo();
+    this._undoManager?.undo();
   }
 
   public doRedo(): void {
-    this._undoManager.redo();
+    this._undoManager?.redo();
   }
 
   /**

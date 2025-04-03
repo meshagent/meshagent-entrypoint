@@ -12,7 +12,7 @@ function createTestServerXmlDocument() {
   const notifyChanges = (msg: ChangeNotification) => notifications.push(msg);
 
   // Instantiate the server doc
-  const server = new ServerXmlDocument(doc, notifyChanges);
+  const server = new ServerXmlDocument(doc, false, notifyChanges);
 
   return { doc, server, notifications };
 }
