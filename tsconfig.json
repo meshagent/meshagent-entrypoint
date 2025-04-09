@@ -1,15 +1,27 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "checkJs": false,
-    "target": "ES2020",
-    "module": "commonjs",
-    "outDir": "dist",
-    "rootDir": "./",
-    "strict": true,
-    "esModuleInterop": true,
-    "typeRoots": ["./types", "./node_modules/@types"],
-    "lib": ["ES2020", "DOM"]
-  },
-  "include": ["src", "test", "./types/**/*.d.ts", "src/**/*"]
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": false,
+        "target": "ES2020",
+        "module": "commonjs",
+        "outDir": "dist",
+        "rootDir": "./",
+        "strict": true,
+        "esModuleInterop": true,
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types",
+            "../node_modules/@types"
+        ],
+        "lib": [
+            "ES2020",
+            "DOM"
+        ]
+    },
+    "include": [
+        "src",
+        "test",
+        "./types/**/*.d.ts",
+        "src/**/*"
+    ]
 }
