@@ -1,7 +1,8 @@
 {
-    "name": "meshagent-entrypoint",
-    "version": "0.0.9",
+    "name": "@meshagent/meshagent-entrypoint",
+    "version": "0.0.11",
     "description": "",
+    "homepage": "https://www.meshagent.com",
     "main": "dist/src/index.js",
     "scripts": {
         "build-prev": "esbuild entrypoint.js --sourcemap --tree-shaking=true --bundle --outdir=dist --target=esnext '--define:process={\"env\":\"production\",\"NODE_ENV\":\"production\"}' --define:global=window --analyze --format=cjs",
@@ -9,7 +10,7 @@
         "build-python": "node ./build-for-python.js",
         "build-ts": "node ./build-for-ts.js",
         "build-ts-browser": "node ./build-for-ts-browser.js",
-        "build": "npm run build-dart & npm run build-python",
+        "build": "npm run build-dart & npm run build-python & npm run build-ts",
         "test": "tsc && mocha dist/test"
     },
     "dependencies": {
