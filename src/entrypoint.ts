@@ -47,7 +47,7 @@ const documents: Map<string, ServerXmlDocument> = new Map();
  * then logs the updated XML state via the associated Y.Doc.
  */
 export function applyChanges(update: UpdatePayload): void {
-  console.log("applying", JSON.stringify(update.changes));
+  //console.log("applying", JSON.stringify(update.changes));
 
   const server = documents.get(update.documentID);
   if (!server) {
@@ -109,19 +109,19 @@ export function applyBackendChanges(documentID: string, base64Changes: string): 
     );
   }
 
-  console.log("applying", JSON.stringify(base64Changes));
+  //console.log("applying", JSON.stringify(base64Changes));
   const buffer = Uint8Array.from(base64.decode(base64Changes), (c) =>
     c.charCodeAt(0)
   );
 
-  console.log("applying", Array.from(buffer));
+  //console.log("applying", Array.from(buffer));
   server.applyBackendChanges(buffer);
 
   // Log updated doc state
   const protocol = protocols.get(documentID);
   if (protocol) {
     const xmlRoot = protocol.doc.get("xml", Y.XmlElement) as Y.XmlElement;
-    console.log(xmlRoot.toString());
+    //console.log(xmlRoot.toString());
   }
 }
 
