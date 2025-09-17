@@ -1,4 +1,4 @@
-const esbuild = self._require("esbuild");
+const esbuild = require("esbuild");
 
 // "build": "esbuild entrypoint.js
 // --sourcemap
