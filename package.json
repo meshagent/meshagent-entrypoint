@@ -1,6 +1,6 @@
 {
     "name": "@meshagent/meshagent-entrypoint",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "description": "",
     "homepage": "https://www.meshagent.com",
     "main": "dist/src/index.js",
