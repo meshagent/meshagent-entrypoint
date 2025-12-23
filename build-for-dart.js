@@ -22,6 +22,6 @@ esbuild.build({
     globalName: "meshagent",
     platform: "browser",
     define,
-    outfile: "../meshagent-dart/js/entrypoint.txt",
+    outfile: "../meshagent-flutter/js/entrypoint.txt",
 }).catch((err) => console.error(err));
 

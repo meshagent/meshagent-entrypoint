@@ -9,6 +9,31 @@ import base64 from "base-64";
 type OnUpdateCallback = (update: Uint8Array, origin?: any) => void;
 
 
+export function uint8ArrayToBase64(bytes: Uint8Array) {
+  let binary = "";
+  const chunkSize = 0x8000; // 32KB chunks to avoid call stack limits
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+
+  return btoa(binary);
+}
+
+
+export function base64ToUint8Array(base64: string) {
+  const binary = atob(base64);
+  const len = binary.length;
+  const bytes = new Uint8Array(len);
+
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes;
+}
+
+
 /**
  * ClientProtocol holds a Y.Doc and applies/receives updates
  * for a "client" instance.
@@ -82,7 +107,7 @@ export function getState(documentID: string, vector?: string): string {
   }
 
   // Return as base64
-  return base64.encode(String.fromCharCode(...state));
+  return uint8ArrayToBase64(state);
 }
 
 /**
@@ -95,7 +120,7 @@ export function getStateVector(documentID: string): string {
   }
 
   const state = Y.encodeStateVector(server.doc);
-  return base64.encode(String.fromCharCode(...state));
+  return uint8ArrayToBase64(state);
 }
 
 /**
@@ -143,10 +168,9 @@ export function registerDocument(
 
   // Create a client protocol that, on updates, calls "sendUpdateToBackend"
   const clientProtocol = new ClientProtocol((update: Uint8Array) => {
-    const str = String.fromCharCode(...update);
     const msg = JSON.stringify({
         documentID: id,
-        data: base64.encode(str),
+        data: uint8ArrayToBase64(update),
     });
     const fn = sendUpdateToBackend ?? onSendUpdateToBackend;
 
