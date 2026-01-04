@@ -18,7 +18,7 @@
         "base-64": "^1.0.0",
         "uuid": "^11.0.3",
         "y-indexeddb": "^9.0.12",
-        "yjs": "^13.6.28"
+        "yjs": "^13.6.29"
     },
     "devDependencies": {
         "@eslint/js": "^9.14.0",
