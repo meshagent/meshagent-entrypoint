@@ -1,6 +1,6 @@
 {
     "name": "@meshagent/meshagent-entrypoint",
-    "version": "0.20.3",
+    "version": "0.20.4",
     "description": "",
     "homepage": "https://www.meshagent.com",
     "main": "dist/src/index.js",
@@ -14,7 +14,7 @@
         "test": "tsc && mocha dist/test"
     },
     "dependencies": {
-        "@meshagent/meshagent-entrypoint": "0.20.3",
+        "@meshagent/meshagent-entrypoint": "0.20.4",
         "base-64": "^1.0.0",
         "uuid": "^11.0.3",
         "y-indexeddb": "^9.0.12",
