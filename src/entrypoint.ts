@@ -1,7 +1,7 @@
 import * as Y from "yjs";
 import { ServerXmlDocument, ChangeNotification } from "./server"; // Adjust path as needed
 import base64 from "base-64";
-
+import { encode as btoa, decode as atob } from 'base-64';
 /**
  * A callback signature for Y.Doc 'update' events. Typically,
  * Y.js passes the `update` (a Uint8Array) and an optional `origin`.
