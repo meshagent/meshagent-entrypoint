@@ -16,7 +16,7 @@
     "dependencies": {
         "@meshagent/meshagent-entrypoint": "0.38.4",
         "base-64": "^1.0.0",
-        "uuid": "^11.0.3",
+        "uuid": "^14.0.0",
         "y-indexeddb": "^9.0.12",
         "yjs": "^13.6.29"
     },
